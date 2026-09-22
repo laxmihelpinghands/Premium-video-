@@ -23,7 +23,7 @@
   <!-- End Meta Pixel Code -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
     * {
@@ -32,107 +32,219 @@
       box-sizing: border-box;
     }
 
+    :root {
+      --blue-500: #3b82f6;
+      --blue-600: #2563eb;
+      --blue-700: #1d4ed8;
+      --telegram: #229ED9;
+      --telegram-dark: #1a86ba;
+    }
+
     body {
-      font-family: 'Inter', sans-serif;
-      background: #0b0d15;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: #05070d;
       min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
       padding: 16px;
       position: relative;
-      background: radial-gradient(circle at 20% 20%, #151e2f, #07090e);
+      overflow-x: hidden;
       color: #ffffff;
     }
 
-    .bg-glow {
+    /* Animated gradient background */
+    body::before {
+      content: '';
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle at 70% 30%, rgba(59, 130, 246, 0.15), transparent 60%);
-      pointer-events: none;
+      inset: 0;
+      background: 
+        radial-gradient(circle at 15% 20%, rgba(59, 130, 246, 0.18), transparent 45%),
+        radial-gradient(circle at 85% 80%, rgba(34, 158, 217, 0.15), transparent 45%),
+        radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.08), transparent 60%);
       z-index: 0;
+      animation: bgShift 12s ease-in-out infinite alternate;
+    }
+
+    @keyframes bgShift {
+      0% { transform: scale(1) translate(0, 0); }
+      100% { transform: scale(1.15) translate(-2%, -2%); }
+    }
+
+    /* Floating particles */
+    .particles {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: rgba(96, 165, 250, 0.5);
+      border-radius: 50%;
+      animation: floatUp linear infinite;
+      box-shadow: 0 0 10px rgba(96, 165, 250, 0.8);
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(100vh) scale(0); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-100px) scale(1); opacity: 0; }
     }
 
     .card {
       position: relative;
       z-index: 10;
-      max-width: 420px;
+      max-width: 430px;
       width: 100%;
-      background: rgba(20, 25, 35, 0.85);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-radius: 36px;
-      padding: 28px 24px 32px;
-      box-shadow: 0 30px 50px -20px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      transition: transform 0.2s ease;
+      background: linear-gradient(160deg, rgba(24, 30, 45, 0.95), rgba(13, 17, 27, 0.98));
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 32px;
+      padding: 26px 22px 28px;
+      box-shadow: 
+        0 40px 80px -30px rgba(0, 0, 0, 0.9),
+        0 0 0 1px rgba(255, 255, 255, 0.06),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
       text-align: center;
-      animation: fadeInUp 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+      animation: fadeInUp 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+      overflow: hidden;
+    }
+
+    /* Top shine line */
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 10%;
+      right: 10%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(96, 165, 250, 0.7), transparent);
     }
 
     @keyframes fadeInUp {
-      0% { opacity: 0; transform: translateY(20px); }
-      100% { opacity: 1; transform: translateY(0); }
+      0% { opacity: 0; transform: translateY(24px) scale(0.98); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
     }
 
-    .profile-wrapper {
+    /* ===== Profile Section ===== */
+    .profile-section {
       display: flex;
-      justify-content: center;
-      margin-bottom: 14px;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    .profile-ring {
+      position: relative;
+      display: inline-flex;
+      padding: 3px;
+      border-radius: 50%;
+      background: conic-gradient(from 0deg, #3b82f6, #229ED9, #6366f1, #3b82f6);
+      animation: rotateRing 4s linear infinite;
+      margin-bottom: 12px;
+    }
+
+    @keyframes rotateRing {
+      to { transform: rotate(360deg); }
+    }
+
+    .profile-ring::after {
+      content: '';
+      position: absolute;
+      inset: 3px;
+      border-radius: 50%;
+      background: #0d1119;
+      z-index: 0;
     }
 
     .profile-pic {
-      width: 88px;
-      height: 88px;
+      position: relative;
+      z-index: 1;
+      width: 84px;
+      height: 84px;
       border-radius: 50%;
       object-fit: cover;
-      border: 3px solid #2b6aff;
-      box-shadow: 0 12px 28px -8px rgba(43, 106, 255, 0.5), 0 0 0 4px rgba(43, 106, 255, 0.2);
-      transition: transform 0.2s ease;
+      display: block;
       background: #1e2638;
     }
 
-    .profile-pic:hover {
-      transform: scale(1.02);
+    /* Live online indicator */
+    .online-dot {
+      position: absolute;
+      bottom: 4px;
+      right: 4px;
+      z-index: 2;
+      width: 18px;
+      height: 18px;
+      background: #22c55e;
+      border-radius: 50%;
+      border: 3px solid #0d1119;
+      box-shadow: 0 0 12px rgba(34, 197, 94, 0.8);
+      animation: pulseDot 2s infinite;
+    }
+
+    @keyframes pulseDot {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
+      50% { box-shadow: 0 0 0 8px rgba(34, 197, 94, 0); }
     }
 
     .channel-name {
-      font-size: 1.3rem;
-      font-weight: 600;
+      font-size: 1.15rem;
+      font-weight: 700;
       letter-spacing: -0.02em;
       display: flex;
       align-items: center;
-      justify-content: center;
-      gap: 8px;
-      margin-bottom: 8px;
+      gap: 7px;
       color: #ffffff;
+      margin-bottom: 4px;
     }
 
     .verified-badge {
-      color: #3b82f6;
-      font-size: 1.1rem;
+      color: var(--telegram);
+      font-size: 1rem;
     }
 
+    .member-count {
+      font-size: 0.78rem;
+      color: #7d8aa3;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-weight: 500;
+    }
+
+    .member-count i {
+      color: #22c55e;
+      font-size: 0.55rem;
+    }
+
+    /* ===== Video Preview ===== */
     .video-preview {
       position: relative;
-      margin: 18px 0 20px;
-      border-radius: 24px;
+      margin: 18px 0 22px;
+      border-radius: 22px;
       overflow: hidden;
       aspect-ratio: 16 / 9;
       background: #0f131e;
-      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08), 0 20px 30px -12px #00000080;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      box-shadow: 
+        0 24px 40px -18px rgba(0, 0, 0, 0.9),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.08);
       cursor: pointer;
-      transition: transform 0.15s ease;
+      transition: transform 0.25s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    .video-preview:hover {
+      transform: translateY(-3px) scale(1.01);
     }
 
     .video-preview:active {
-      transform: scale(0.985);
+      transform: scale(0.98);
     }
 
     .video-placeholder {
@@ -140,127 +252,131 @@
       inset: 0;
       background: linear-gradient(145deg, #1b2333, #0e121c);
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 12px;
       color: #a0aec0;
     }
 
     .blur-overlay {
       position: absolute;
       inset: 0;
-      backdrop-filter: blur(14px) brightness(0.65);
-      -webkit-backdrop-filter: blur(14px) brightness(0.65);
-      background: rgba(10, 12, 18, 0.3);
+      backdrop-filter: blur(16px) brightness(0.6);
+      -webkit-backdrop-filter: blur(16px) brightness(0.6);
+      background: radial-gradient(circle at center, rgba(37, 99, 235, 0.25), rgba(10, 12, 18, 0.6));
       z-index: 2;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 12px;
-      color: white;
-      font-weight: 500;
+      gap: 10px;
     }
 
     .lock-icon {
-      font-size: 2.4rem;
+      font-size: 1.7rem;
       color: #ffffff;
-      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.6));
-      background: rgba(0,0,0,0.4);
-      width: 60px;
-      height: 60px;
+      width: 58px;
+      height: 58px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      backdrop-filter: blur(4px);
-      border: 1px solid rgba(255,255,255,0.2);
-      transition: transform 0.2s ease, background 0.2s ease;
+      background: linear-gradient(145deg, rgba(37, 99, 235, 0.9), rgba(29, 78, 216, 0.9));
+      border: 2px solid rgba(255, 255, 255, 0.25);
+      box-shadow: 0 12px 24px -6px rgba(37, 99, 235, 0.7);
+      transition: transform 0.25s ease;
     }
 
     .video-preview:hover .lock-icon {
-      transform: scale(1.08);
-      background: rgba(43, 106, 255, 0.5);
+      transform: scale(1.1) rotate(-8deg);
     }
 
-    .blur-overlay span {
-      font-size: 0.9rem;
-      background: rgba(0, 0, 0, 0.6);
-      padding: 6px 14px;
-      border-radius: 40px;
-      letter-spacing: 0.3px;
-      backdrop-filter: blur(4px);
-      border: 1px solid rgba(255,255,255,0.15);
+    .lock-label {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #ffffff;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
     }
 
     .click-hint {
-      font-size: 0.7rem;
-      color: #93c5fd;
-      margin-top: 4px;
+      font-size: 0.68rem;
+      color: #ffffff;
+      font-weight: 600;
       display: flex;
       align-items: center;
       gap: 5px;
-      background: rgba(43, 106, 255, 0.15);
-      padding: 4px 10px;
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      padding: 5px 12px;
       border-radius: 20px;
-      border: 1px solid rgba(43, 106, 255, 0.3);
-      animation: pulseHint 1.8s infinite;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 6px 16px -4px rgba(37, 99, 235, 0.7);
+      animation: pulseHint 1.8s ease-in-out infinite;
     }
 
     @keyframes pulseHint {
-      0%, 100% { opacity: 0.8; }
-      50% { opacity: 1; }
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
     }
 
-    .fake-play {
+    /* Duration badge */
+    .duration-badge {
       position: absolute;
-      bottom: 16px;
-      left: 16px;
+      bottom: 12px;
+      right: 12px;
       z-index: 3;
-      color: rgba(255,255,255,0.7);
-      font-size: 0.8rem;
+      background: rgba(0, 0, 0, 0.75);
+      color: #ffffff;
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 4px 9px;
+      border-radius: 8px;
+      backdrop-filter: blur(6px);
       display: flex;
       align-items: center;
-      gap: 6px;
-      background: rgba(0,0,0,0.4);
-      padding: 6px 12px;
-      border-radius: 30px;
-      backdrop-filter: blur(4px);
+      gap: 5px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
     }
 
-    /* ===== NEW Headline Section ===== */
+    /* ===== Headline ===== */
     .headline {
-      font-size: 1.75rem;
+      font-size: 1.65rem;
       font-weight: 800;
       line-height: 1.25;
       margin-bottom: 10px;
-      letter-spacing: -0.03em;
-      background: linear-gradient(135deg, #ffffff 0%, #a5c4ff 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
+      letter-spacing: -0.035em;
+      color: #ffffff;
     }
 
-    .headline .highlight {
-      background: linear-gradient(135deg, #3b82f6, #60a5fa);
+    .headline .accent {
+      background: linear-gradient(135deg, #229ED9, #60a5fa);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
       position: relative;
+      display: inline-block;
+    }
+
+    .headline .emoji {
+      display: inline-block;
+      animation: bounceEmoji 2s ease-in-out infinite;
+    }
+
+    @keyframes bounceEmoji {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
     }
 
     .subtext {
-      font-size: 0.95rem;
-      color: #a1aec6;
+      font-size: 0.9rem;
+      color: #98a4bd;
       margin-bottom: 20px;
-      line-height: 1.5;
-      padding: 0 6px;
+      line-height: 1.55;
+      font-weight: 500;
+      padding: 0 4px;
     }
 
     .subtext strong {
-      color: #e2e8f0;
-      font-weight: 600;
+      color: #dbeafe;
+      font-weight: 700;
     }
 
     /* ===== Timer Box ===== */
@@ -269,29 +385,46 @@
       align-items: center;
       justify-content: center;
       gap: 10px;
-      background: rgba(239, 68, 68, 0.12);
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(220, 38, 38, 0.08));
       border: 1px solid rgba(239, 68, 68, 0.35);
-      border-radius: 16px;
-      padding: 12px 16px;
-      margin-bottom: 18px;
+      border-radius: 14px;
+      padding: 11px 16px;
+      margin-bottom: 16px;
       transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .timer-box::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #ef4444, #f87171);
+      animation: timerBar 15s linear forwards;
+    }
+
+    @keyframes timerBar {
+      from { width: 100%; }
+      to { width: 0%; }
     }
 
     .timer-box i {
       color: #ef4444;
-      font-size: 1.1rem;
+      font-size: 1rem;
       animation: tickPulse 1s infinite;
     }
 
     @keyframes tickPulse {
       0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.6; transform: scale(1.1); }
+      50% { opacity: 0.6; transform: scale(1.15); }
     }
 
     .timer-text {
-      font-size: 0.88rem;
+      font-size: 0.85rem;
       color: #fca5a5;
-      font-weight: 500;
+      font-weight: 600;
       line-height: 1.4;
     }
 
@@ -300,15 +433,19 @@
       color: #ef4444;
       font-size: 1.05rem;
       font-variant-numeric: tabular-nums;
-      min-width: 28px;
+      min-width: 26px;
       display: inline-block;
       text-align: center;
     }
 
     .timer-box.expired {
-      background: rgba(107, 114, 128, 0.15);
+      background: linear-gradient(135deg, rgba(107, 114, 128, 0.15), rgba(75, 85, 99, 0.08));
       border-color: rgba(107, 114, 128, 0.4);
       animation: shakeBox 0.4s ease;
+    }
+
+    .timer-box.expired::before {
+      display: none;
     }
 
     .timer-box.expired i,
@@ -323,59 +460,61 @@
 
     @keyframes shakeBox {
       0%, 100% { transform: translateX(0); }
-      25% { transform: translateX(-4px); }
-      75% { transform: translateX(4px); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
     }
 
-    /* Telegram button */
+    /* ===== Telegram Button ===== */
     .tg-btn {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 12px;
-      background: linear-gradient(135deg, #2b6aff, #1e4fd9);
+      gap: 11px;
+      background: linear-gradient(135deg, #229ED9, #1a86ba);
       border: none;
       border-radius: 60px;
-      padding: 18px 24px;
+      padding: 17px 24px;
       width: 100%;
-      font-size: 1.2rem;
-      font-weight: 700;
+      font-size: 1.13rem;
+      font-weight: 800;
       color: #ffffff;
       text-decoration: none;
-      box-shadow: 0 20px 30px -10px #1e4fd9, 0 0 0 1px rgba(255, 255, 255, 0.1) inset;
-      transition: all 0.2s ease;
       letter-spacing: -0.01em;
       cursor: pointer;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
       position: relative;
       overflow: hidden;
-      animation: btnGlow 2.5s infinite;
+      transition: transform 0.2s ease, box-shadow 0.3s ease;
+      box-shadow: 
+        0 16px 32px -10px rgba(34, 158, 217, 0.7),
+        0 0 0 1px rgba(255, 255, 255, 0.15) inset,
+        inset 0 1px 0 rgba(255, 255, 255, 0.25);
+      animation: btnPulse 2.4s ease-in-out infinite;
     }
 
-    @keyframes btnGlow {
-      0%, 100% { box-shadow: 0 20px 30px -10px #1e4fd9, 0 0 0 1px rgba(255, 255, 255, 0.1) inset; }
-      50% { box-shadow: 0 20px 36px -8px #3b82f6, 0 0 0 1px rgba(255, 255, 255, 0.25) inset; }
+    @keyframes btnPulse {
+      0%, 100% { box-shadow: 0 16px 32px -10px rgba(34, 158, 217, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.15) inset, inset 0 1px 0 rgba(255, 255, 255, 0.25); }
+      50% { box-shadow: 0 20px 42px -8px rgba(34, 158, 217, 1), 0 0 0 1px rgba(255, 255, 255, 0.25) inset, inset 0 1px 0 rgba(255, 255, 255, 0.35); }
     }
 
     .tg-btn i {
-      font-size: 1.5rem;
-      transition: transform 0.2s ease;
+      font-size: 1.45rem;
+      transition: transform 0.25s ease;
     }
 
     .tg-btn:hover {
-      background: linear-gradient(135deg, #3b7aff, #2b5ae0);
-      transform: scale(1.02);
-      box-shadow: 0 24px 36px -12px #1e4fd9, 0 0 0 2px rgba(255, 255, 255, 0.2) inset;
+      transform: translateY(-2px) scale(1.015);
     }
 
     .tg-btn:hover i {
-      transform: translateX(3px);
+      transform: translateX(4px) rotate(-8deg);
     }
 
     .tg-btn:active {
       transform: scale(0.98);
     }
 
+    /* Shine sweep */
     .tg-btn::after {
       content: '';
       position: absolute;
@@ -383,96 +522,120 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
       transform: translateX(-100%);
-      transition: transform 0.6s ease;
+      transition: transform 0.7s ease;
     }
 
     .tg-btn:hover::after {
       transform: translateX(100%);
     }
 
-    .footnote {
-      font-size: 0.75rem;
-      color: #6e7b94;
+    /* Trust badges */
+    .trust-row {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
-      margin-top: 12px;
+      gap: 14px;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
     }
 
-    .footnote i {
-      font-size: 0.8rem;
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.7rem;
+      color: #6e7b94;
+      font-weight: 600;
+    }
+
+    .trust-item i {
+      color: #22c55e;
+      font-size: 0.72rem;
     }
 
     @media (max-width: 380px) {
       .card {
-        padding: 22px 18px 26px;
+        padding: 22px 16px 24px;
+        border-radius: 26px;
       }
       .headline {
-        font-size: 1.5rem;
+        font-size: 1.45rem;
       }
       .tg-btn {
-        font-size: 1.1rem;
-        padding: 16px 20px;
+        font-size: 1.05rem;
+        padding: 15px 20px;
       }
       .profile-pic {
-        width: 76px;
-        height: 76px;
+        width: 74px;
+        height: 74px;
       }
       .timer-text {
-        font-size: 0.8rem;
+        font-size: 0.78rem;
+      }
+      .trust-row {
+        gap: 10px;
+      }
+      .trust-item {
+        font-size: 0.65rem;
       }
     }
   </style>
 </head>
 <body>
-  <div class="bg-glow"></div>
+  <div class="particles" id="particles"></div>
 
   <div class="card">
-    <div class="profile-wrapper">
-      <img 
-        class="profile-pic" 
-        src="https://iili.io/nuvh11t.jpg" 
-        alt="Profile photo"
-        loading="eager"
-        onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ccircle cx=%2250%22 cy=%2250%22 r=%2248%22 fill=%22%232b6aff%22 /%3E%3Ctext x=%2250%22 y=%2268%22 font-size=%2248%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22%3ET%3C/text%3E%3C/svg%3E'"
-      >
-    </div>
-
-    <div class="channel-name">
-      <i class="fas fa-crown" style="color: #fbbf24; font-size: 1rem;"></i>
-      Premium Video
-      <i class="fas fa-check-circle verified-badge"></i>
+    <!-- Profile Section with rotating ring + online dot -->
+    <div class="profile-section">
+      <div class="profile-ring">
+        <img 
+          class="profile-pic" 
+          src="https://iili.io/nuvh11t.jpg" 
+          alt="Profile photo"
+          loading="eager"
+          onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ccircle cx=%2250%22 cy=%2250%22 r=%2248%22 fill=%22%23229ED9%22 /%3E%3Ctext x=%2250%22 y=%2268%22 font-size=%2248%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22%3ET%3C/text%3E%3C/svg%3E'"
+        >
+        <span class="online-dot"></span>
+      </div>
+      <div class="channel-name">
+        <i class="fas fa-crown" style="color: #fbbf24; font-size: 0.95rem;"></i>
+        Premium Video
+        <i class="fas fa-check-circle verified-badge"></i>
+      </div>
+      <div class="member-count">
+        <i class="fas fa-circle"></i> 12,847 members online
+      </div>
     </div>
 
     <!-- Clickable locked video preview -->
     <div class="video-preview" id="lockedPreview" role="button" tabindex="0" aria-label="Click to unlock video on Telegram">
       <div class="video-placeholder">
-        <i class="fas fa-film" style="font-size: 3rem; opacity: 0.3;"></i>
+        <i class="fas fa-film" style="font-size: 3rem; opacity: 0.25;"></i>
       </div>
       <div class="blur-overlay">
         <div class="lock-icon">
           <i class="fas fa-lock"></i>
         </div>
-        <span>Exclusive content locked</span>
+        <div class="lock-label">Exclusive Video Locked</div>
         <div class="click-hint">
-          <i class="fas fa-hand-pointer"></i> Click to unlock
+          <i class="fas fa-hand-pointer"></i> Tap to unlock
         </div>
       </div>
-      <div class="fake-play">
-        <i class="fas fa-play-circle"></i> 0:42
+      <div class="duration-badge">
+        <i class="fas fa-play"></i> 12:34
       </div>
     </div>
 
-    <!-- NEW HEADLINE -->
+    <!-- Headline -->
     <h1 class="headline">
-      📹 Full Video <span class="highlight">Telegram</span> Pe Hai
+      <span class="emoji">🎬</span> Full Video <span class="accent">Telegram</span> Pe Hai
     </h1>
     <p class="subtext">
-      Ye video sirf hamare <strong>Telegram channel</strong> pe upload ki gayi hai. 
-      Neeche button dabao aur <strong>full video free me dekho</strong> — turant unlock!
+      Ye exclusive video sirf hamare <strong>Telegram channel</strong> pe available hai. 
+      Neeche button dabao aur <strong>free me full video</strong> dekho — turant unlock!
     </p>
 
     <!-- Countdown Timer -->
@@ -483,7 +646,7 @@
       </div>
     </div>
 
-    <!-- Telegram Join Button (NO event tracking) -->
+    <!-- Telegram Join Button -->
     <a 
       href="https://t.me/+OKpglJ3SNBEwZGE1" 
       class="tg-btn" 
@@ -494,8 +657,11 @@
       <i class="fab fa-telegram-plane"></i> Join Telegram
     </a>
 
-    <div class="footnote">
-      <i class="fas fa-shield-alt"></i> 100% free • instant access
+    <!-- Trust badges -->
+    <div class="trust-row">
+      <div class="trust-item"><i class="fas fa-shield-alt"></i> 100% Safe</div>
+      <div class="trust-item"><i class="fas fa-bolt"></i> Instant Access</div>
+      <div class="trust-item"><i class="fas fa-gift"></i> Free</div>
     </div>
   </div>
 
@@ -507,8 +673,40 @@
       const timerBox = document.getElementById('timerBox');
       const timerCount = document.getElementById('timerCount');
 
-      // ---------- Click on locked preview → open Telegram (NO pixel event) ----------
+      // ---------- Floating particles ----------
+      const particlesContainer = document.getElementById('particles');
+      const particleCount = 18;
+      for (let i = 0; i < particleCount; i++) {
+        const p = document.createElement('div');
+        p.className = 'particle';
+        p.style.left = Math.random() * 100 + '%';
+        p.style.animationDuration = (8 + Math.random() * 10) + 's';
+        p.style.animationDelay = (Math.random() * 8) + 's';
+        p.style.opacity = 0.3 + Math.random() * 0.5;
+        const size = 2 + Math.random() * 3;
+        p.style.width = size + 'px';
+        p.style.height = size + 'px';
+        particlesContainer.appendChild(p);
+      }
+
+      // ---------- Join Button: fire Lead event ----------
+      joinBtn.addEventListener('click', function() {
+        if (typeof fbq === 'function') {
+          fbq('track', 'Lead', {
+            content_name: 'Telegram Join',
+            content_category: 'Video Unlock'
+          });
+        }
+      });
+
+      // ---------- Locked preview click → open Telegram + Lead ----------
       lockedPreview.addEventListener('click', function() {
+        if (typeof fbq === 'function') {
+          fbq('track', 'Lead', {
+            content_name: 'Locked Preview Click',
+            content_category: 'Video Unlock'
+          });
+        }
         window.open(TELEGRAM_URL, '_blank', 'noopener,noreferrer');
       });
 
@@ -519,8 +717,6 @@
           lockedPreview.click();
         }
       });
-
-      // Join button — plain link, no JS event, no fbq fire (only default PageView)
 
       // ---------- 15-second Countdown Timer ----------
       let secondsLeft = 15;
@@ -539,11 +735,11 @@
           timerCount.textContent = '0';
           
           timerBox.classList.add('expired');
-          timerBox.innerHTML = '<i class="fas fa-exclamation-triangle"></i><div class="timer-text">⚠️ Link expired — but you can still try joining below!</div>';
+          timerBox.innerHTML = '<i class="fas fa-exclamation-triangle"></i><div class="timer-text">Link expired — but you can still try joining below!</div>';
         }
       }, 1000);
 
-      // Only ViewContent fires on load (PageView already fired in head)
+      // ViewContent on page load
       window.addEventListener('load', function() {
         if (typeof fbq === 'function') {
           fbq('track', 'ViewContent');
